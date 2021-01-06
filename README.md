@@ -1,23 +1,14 @@
-# EDA - Exploratory Data Analysis
+# Model
+* We created a custom model for the data APIs provided by [99P Labs](https://developer.99plabs.io/) using Nearest Neighbors (which organically developed its own clusters centered around the deployed vehicles), based on key features like <b>pickup and dropoff locations and distances, trip request time, driver-vehicle feasibility</b>, and more.
+* We first started with a simple model by relaxing these restrictions, limiting our training dataset, and developing around the goal of just maximizing the total number of trip requests that can be fulfilled in a given day while minimizing the average distance traveled.
+* After we were able to get a minimal model running, we integrated ideal restrictions (as listed above) for a more realistic and optimized fleet management system.
+* Different number of vehicles could be entered into the model and the results can be compared using the following.
+  * The metrics used to measure the performance of the model are: the average distance to pickup, the drivers’ average waiting for the next nearest pickup, the number of assigned trips and the number of unassigned trips for the model. The ideal situation is to minimize the average distance to pickup, the average waiting time for the next nearest pickup and the number of unassigned trips for the model.
+* The model can be used to find the minimum number of vehicles required to complete all the trips for a day (or to complete the highest number of trips for one day the company has had within the past two years).
 
-Contains the following files
-* <b>DBScan and POI Standardization.ipynb</b>
-  * DBScan is a density-based clustering algorithm to uncover new insights in optimizing routing. 
-  * Unlike conventional clustering algorithms, such as K-Means which require extensively tweaking parameters and tuning, DBScan was an optimal choice.
-  * Essentially, by assigning vehicles to clusters of pickup/dropoff locations we can incorporate many-to-one or many-to-many pickup and dropoff delivery possibilities.
-  * Distance used, given more time, we would have integrated the actual road distances in our model using a routing api such as Google Maps API.
-  * We performed DBScan on people movement but the same code could be applied to the Medical Dataset with a few minor tweaks regarding unstandardized data naming.
-  * Additionally, developed code that reliably standardized the output from POI data from Overpass API from OpenStreetMaps. In the future, this data could be plotted on an interactive map, on-demand, and would provide a gateway to new locations in need of deliveries. 
-  * Future optimization would include inducing COVID-19 cleaning, driver breaks, and other windows of time when demand is at its low as well as optimizing refueling by incorporating gas station locations in our routing.
-* <b>clustering_model.ipynb</b>
-  * In efforts to maximize profit, a clustering model was developed to minimize distance traveled by individual vehicles (based on pick-up and drop-off locations).
-  * A K-Means clustering was performed on the Medical Dataset, and the best k was chosen via the Elbow Method. Then, the position of the vehicles were plotted using their longitude and latitude locations. A map was also used to visualize where most of the pick-up and drop-off locations were.
-  * Temporary vehicle hubs were also chosen relative to the positions of the  vehicle pick-up locations. For future development of this model, implementing known hubs with this algorithm will help assign vehicle pick-ups and drop-offs based on where the nearest hub is located.
-  * After careful implementation, we decided that it would be difficult for the K-Means clustering algorithm to take into account other contraints such as time. Thus, we decided to stick with the continuing development of the custom model. 
-  * Other possible improvements to this model in the future would be finding a way to include adding the necessary contraints to the K-Means clustering algorithm.
-
-* <b>Honda_API.ipynb</b>
-  * Since there were many data tables pulled from the API, we decided to perform correlation analysis to get a better understanding of the data at hand. Correlation matrices were only generated for tables with relevant features, such as trip requests, safety details, information about vehicle make/model (some designed to cater towards handicap features), etc.
-  * Each table had a mix of numerical and categorical variables. In order to spot correlations between certain categories, categorical variables (event_type, distracted = True/False, etc.) were one-hot encoded and thus analyzed in this manner.
-  * Features with the highest correlations were printed out to help, highlighting the importance of certain features as compared to others.
-  * This data analysis also serves to aid the Honda operations manager in understanding certain patterns or trends for rides.
+### Contains the following files:
+* Model files
+  * Micro-transit query.ipynb
+  * Public Simple Model.ipynb
+* Data files can be found in [this google drive](https://drive.google.com/drive/folders/1FyuwVvo6zkYEEtjqwQ5JaoUtzl740-Lm?usp=sharing)
+  * Due to the sensitive and internal nature of the data set, we've stored the data files within a restricted google drive where only individuals with direct shared access can view the files. For additional information, please contact any of the project members, mentors or course staff for access.
